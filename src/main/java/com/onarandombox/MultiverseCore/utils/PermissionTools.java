@@ -9,6 +9,7 @@ package com.onarandombox.MultiverseCore.utils;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -159,11 +160,11 @@ public class PermissionTools {
                 }
             } else {
                 if (teleportee.equals(teleporter)) {
-                    teleporterPlayer.sendMessage(economist.getNSFMessage(currency,
-                            "You need " + formattedAmount + " to enter " + toWorld.getColoredWorldString()));
+//                    teleporterPlayer.sendMessage(economist.getNSFMessage(currency, "You need " + formattedAmount + " to enter " + toWorld.getColoredWorldString()));
+                    teleporterPlayer.sendMessage(economist.getNSFMessage(currency, ""));
                 } else {
-                    teleporterPlayer.sendMessage(economist.getNSFMessage(currency,
-                            "You need " + formattedAmount + " to send " + teleportee.getName() + " to " + toWorld.getColoredWorldString()));
+//                    teleporterPlayer.sendMessage(economist.getNSFMessage(currency, "You need " + formattedAmount + " to send " + teleportee.getName() + " to " + toWorld.getColoredWorldString()));
+                    teleporterPlayer.sendMessage(economist.getNSFMessage(currency, ""));
                 }
                 return false;
             }
@@ -174,9 +175,11 @@ public class PermissionTools {
     private void sendTeleportPaymentMessage (MVEconomist economist, Player teleporterPlayer, Player teleportee, String toWorld, double price, int currency) {
         price = Math.abs(price);
         if (teleporterPlayer.equals(teleportee)) {
-            teleporterPlayer.sendMessage("You were " + (price > 0D ? "charged " : "given ") + economist.formatPrice(price, currency) + " for teleporting to " + toWorld);
+//            teleporterPlayer.sendMessage("You were " + (price > 0D ? "charged " : "given ") + economist.formatPrice(price, currency) + " for teleporting to " + toWorld);
+            teleporterPlayer.sendMessage(String.format("%s[%s世界管理终端%s]%s 启动通讯转移协议…正在更变%s%s世界参数…容纳用户中……", ChatColor.GRAY, ChatColor.GOLD, ChatColor.GRAY, ChatColor.WHITE, toWorld, ChatColor.WHITE));
         } else {
-            teleporterPlayer.sendMessage("You were " + (price > 0D ? "charged " : "given ") + economist.formatPrice(price, currency) + " for teleporting " + teleportee.getName() + " to " + toWorld);
+//            teleporterPlayer.sendMessage("You were " + (price > 0D ? "charged " : "given ") + economist.formatPrice(price, currency) + " for teleporting " + teleportee.getName() + " to " + toWorld);
+            teleporterPlayer.sendMessage(String.format("%s[%s世界管理终端%s]%s 启动通讯转移协议…正在更变%s%s世界参数…容纳用户%s%s中……", ChatColor.GRAY, ChatColor.GOLD, ChatColor.GRAY, ChatColor.WHITE, toWorld, ChatColor.WHITE, teleportee.getName(), ChatColor.WHITE));
         }
     }
 
@@ -230,9 +233,11 @@ public class PermissionTools {
         if (toWorld != null) {
             if (!this.plugin.getMVPerms().canEnterWorld(teleporterPlayer, toWorld)) {
                 if (teleportee.equals(teleporter)) {
-                    teleporter.sendMessage("You don't have access to go here...");
+//                    teleporter.sendMessage("You don't have access to go here...");
+                    teleporterPlayer.sendMessage(String.format("%s[%s世界管理终端%s]%s 无法构建足够的能量将您送入。", ChatColor.GRAY, ChatColor.GOLD, ChatColor.GRAY, ChatColor.WHITE));
                 } else {
-                    teleporter.sendMessage("You can't send " + teleportee.getName() + " here...");
+//                    teleporter.sendMessage("You can't send " + teleportee.getName() + " here...");
+                    teleporterPlayer.sendMessage(String.format("%s[%s世界管理终端%s]%s 无法构建足够的能量将%s%s送入。", ChatColor.GRAY, ChatColor.GOLD, ChatColor.GRAY, ChatColor.WHITE, teleportee.getName(), ChatColor.WHITE));
                 }
 
                 return false;
@@ -245,10 +250,11 @@ public class PermissionTools {
         if (fromWorld != null) {
             if (fromWorld.getWorldBlacklist().contains(toWorld.getName())) {
                 if (teleportee.equals(teleporter)) {
-                    teleporter.sendMessage("You don't have access to go to " + toWorld.getColoredWorldString() + " from " + fromWorld.getColoredWorldString());
+//                    teleporter.sendMessage("You don't have access to go to " + toWorld.getColoredWorldString() + " from " + fromWorld.getColoredWorldString());
+                    teleporterPlayer.sendMessage(String.format("%s[%s世界管理终端%s]%s 容纳用户失败，没有权限介入。", ChatColor.GRAY, ChatColor.GOLD, ChatColor.GRAY, ChatColor.WHITE));
                 } else {
-                    teleporter.sendMessage("You don't have access to send " + teleportee.getName() + " from "
-                         + fromWorld.getColoredWorldString() + " to " + toWorld.getColoredWorldString());
+//                    teleporter.sendMessage("You don't have access to send " + teleportee.getName() + " from " + fromWorld.getColoredWorldString() + " to " + toWorld.getColoredWorldString());
+                    teleporterPlayer.sendMessage(String.format("%s[%s世界管理终端%s]%s 容纳用户失败，没有权限将来自%s%s的%s%s介入%s%s。", ChatColor.GRAY, ChatColor.GOLD, ChatColor.GRAY, ChatColor.WHITE, fromWorld.getColoredWorldString(), ChatColor.WHITE, teleportee.getName(), ChatColor.WHITE, toWorld.getColoredWorldString(), ChatColor.WHITE));
                 }
                 return false;
             }
@@ -277,7 +283,8 @@ public class PermissionTools {
         if (perms.hasPermission(teleportee, "mv.bypass.playerlimit." + toWorld.getName(), false)) {
             return true;
         } else {
-            teleporter.sendMessage("The world " + toWorld.getColoredWorldString() + " is full");
+//            teleporter.sendMessage("The world " + toWorld.getColoredWorldString() + " is full");
+            teleporter.sendMessage(String.format("%s[%s世界管理终端%s]%s 世界参数变更失败，无法进入。", ChatColor.GRAY, ChatColor.GOLD, ChatColor.GRAY, ChatColor.WHITE));
             return false;
         }
     }

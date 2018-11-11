@@ -86,7 +86,8 @@ public class MVEconomist {
      * @return the formatted insufficient funds message.
      */
     public String getNSFMessage(int currency, String message) {
-        return "Sorry, you don't have enough " + (isItemCurrency(currency) ? "items" : "funds") + ". " + message;
+//        return "Sorry, you don't have enough " + (isItemCurrency(currency) ? "items" : "funds") + ". " + message;
+        return String.format("%s[%s世界管理终端%s]%s 目前还没有足够的力量去激活它。%s", ChatColor.GRAY, ChatColor.GOLD, ChatColor.GRAY, ChatColor.WHITE, message);
     }
 
     /**
@@ -271,14 +272,11 @@ public class MVEconomist {
         }
 
         private static void showReceipt(Player player, double price, int item) {
-            if (price > 0D) {
-                player.sendMessage(String.format("%s%s%s %s",
-                        ChatColor.WHITE, "You have been charged", ChatColor.GREEN, getFormattedPrice(price, item)));
-            } else if (price < 0D) {
-                player.sendMessage(String.format("%s%s%s %s",
-                        ChatColor.DARK_GREEN, getFormattedPrice((price * -1), item),
-                        ChatColor.WHITE, "has been added to your inventory."));
-            }
+//            if (price > 0D) {
+//                player.sendMessage(String.format("%s%s%s %s", ChatColor.WHITE, "You have been charged", ChatColor.GREEN, getFormattedPrice(price, item)));
+//            } else if (price < 0D) {
+//                player.sendMessage(String.format("%s%s%s %s", ChatColor.DARK_GREEN, getFormattedPrice((price * -1), item), ChatColor.WHITE, "has been added to your inventory."));
+//            }
         }
     }
 }
